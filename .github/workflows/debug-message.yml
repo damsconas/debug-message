@@ -1,4 +1,4 @@
-name: Debug Message Example
+name: Run Step Based on Secret
 
 on:
   push:
@@ -6,12 +6,13 @@ on:
       - main
 
 jobs:
-  debug-job:
+  my-job:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Print debug message
-        run: echo "::debug::I KNOW YOU"
+      - name: Check if MY_SECRET is set
+        if: ${{ secrets.MY_SECRET != '' }}
+        env:
+          MY_SECRET: ${{ secrets.MY_SECRET }}
+        run: |
+          echo "The secret MY_SECRET is set and not empty."
+          echo "Its value is: $MY_SECRET"
