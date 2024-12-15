@@ -1,18 +1,17 @@
-name: Run Step Based on Secret
+name: Limit Concurrent Jobs
 
 on:
   push:
     branches:
       - main
 
+concurrency:
+  group: my-workflow-${{ github.ref }}  # Group by branch
+  cancel-in-progress: true
+
 jobs:
-  my-job:
+  example_job:
     runs-on: ubuntu-latest
     steps:
-      - name: Check if MY_SECRET is set
-        if: ${{ secrets.MY_SECRET != '' }}
-        env:
-          MY_SECRET: ${{ secrets.MY_SECRET }}
-        run: |
-          echo "The secret MY_SECRET is set and not empty."
-          echo "Its value is: $MY_SECRET"
+      - name: Run a job
+        run: echo "This job is running with concurrency control"
