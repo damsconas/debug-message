@@ -1,0 +1,17 @@
+name: Debug Message Example
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  debug-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Print debug message
+        run: echo "::debug::I KNOW YOU"
